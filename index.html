@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <audio id="backgroundAudio" src="audio.mp3" autoplay loop></audio>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column; /* Change to column layout */
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(45deg, #0f0c29, #301b3f, #421a8d);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            position: relative;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1); /* Glass-like background */
+            backdrop-filter: blur(10px); /* Blurred effect */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+            font-size: 1.5em;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .border {
+            border-radius: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1); /* Glass-like background */
+            backdrop-filter: blur(10px); /* Blurred effect */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 1;
+            width: 500px;  /* Increased width */
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .clock {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 8em;    
+            color: #00ffcc;
+            text-shadow: 
+                0 0 10px rgba(0, 255, 255, 0.5),
+                0 0 20px rgba(0, 255, 255, 1),
+                0 0 30px rgba(255, 0, 255, 0.5),
+                0 0 40px rgba(0, 255, 255, 1),
+                0 0 50px rgba(0, 255, 255, 0.5),
+                0 0 60px rgba(0, 255, 255, 1);
+            position: relative;
+            z-index: 2;
+            animation: pulseText 2s infinite alternate;
+        }
+
+        @keyframes pulseText {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .eyes {
+            position: absolute;
+            top: -40px;
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
+
+        .eye {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid black;
+            position: relative;
+        }
+
+        .pupil {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: black;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .eyebrow {
+            width: 50px;
+            height: 5px;
+            background: black;
+            position: absolute;
+        }
+
+        .left-eyebrow {
+            top: -55px;
+            left: 0;
+            transform: rotate(-20deg);
+        }
+
+        .right-eyebrow {
+            top: -55px;
+            right: 0;
+            transform: rotate(20deg);
+        }
+
+        .hand {
+            width: 20px;
+            height: 100px;
+            background: #ffcc00; /* Hand Color */
+            position: absolute;
+            bottom: 50%; /* Position higher */
+            border-radius: 5px;
+            transform-origin: bottom; /* Set rotation pivot */
+            animation: flap 2s infinite ease-in-out;
+        }
+
+        .left-hand {
+            left: -30px;
+            animation: flapLeft 2s infinite ease-in-out;
+        }
+
+        .right-hand {
+            right: -30px;
+            animation: flapRight 2s infinite ease-in-out;
+        }
+
+        @keyframes flapLeft {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(-130deg); /* Flap angle */
+            }
+        }
+
+        @keyframes flapRight {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(130deg); /* Flap angle */
+            }
+        }
+
+        .legs {
+            position: absolute;
+            bottom: -20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .leg {
+            width: 20px;
+            height: 20px;
+            background: black;
+            margin: 0 10px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .shoe {
+            width: 30px;
+            height: 10px;
+            background: #ff5733; /* Shoe color */
+            border-radius: 5px;
+            position: absolute;
+            bottom: -10px; 
+            left: -5px;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: starTwinkle 2s infinite ease-in-out;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .butterfly {
+            position: absolute;
+            width: 50px;
+            animation: fly 5s linear forwards, fade 5s linear forwards;
+            opacity: 0.5;
+            z-index: 3;
+        }
+
+        @keyframes fade {
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fly {
+            0% {
+                transform: translateY(100vh); /* Start from the bottom */
+            }
+            100% {
+                transform: translateY(-100px); /* Fly up */
+            }
+        }
+
+        .developer {
+            position: absolute;
+            bottom: 20px; /* Position at the bottom */
+            text-align: center;
+            color: #fff;
+            font-size: 1em;
+            font-family: 'Rajdhani', sans-serif;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="navbar">Digital Clock Project</div>
+    <div class="border">
+        <div class="eyes">
+            <div class="eye">
+                <div class="pupil"></div>
+            </div>
+            <div class="eye">
+                <div class="pupil"></div>
+            </div>
+        </div>
+        <div class="eyebrow left-eyebrow"></div>
+        <div class="eyebrow right-eyebrow"></div>
+        <div class="clock" id="clock">00:00:00</div>
+        <div class="hand left-hand"></div>
+        <div class="hand right-hand"></div>
+        <div class="legs">
+            <div class="leg">
+                <div class="shoe"></div>
+            </div>
+            <div class="leg">
+                <div class="shoe"></div>
+            </div>
+        </div>
+    </div>
+    <div class="developer">@Developed by Manish Pathak</div>
+    <div class="stars"></div>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds}`;
+        }
+
+        function createStars() {
+            for (let i = 0; i < 150; i++) { 
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 5 + 2; 
+                star.style.height = size + 'px';
+                star.style.width = size + 'px';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                document.querySelector('.stars').appendChild(star);
+            }
+        }
+
+        function createButterfly() {
+            const butterfly = document.createElement('img');
+            butterfly.src = 'https://img.icons8.com/color/48/000000/butterfly.png';
+            butterfly.className = 'butterfly';
+            const xPosition = Math.random() * (window.innerWidth - 50); // Avoid going off-screen
+            butterfly.style.left = xPosition + 'px';
+            document.body.appendChild(butterfly);
+            setTimeout(() => butterfly.remove(), 5000);
+        }
+
+        function animate() {
+            updateTime();
+            if (Math.random() < 0.02) createButterfly(); // Control butterfly frequency
+            requestAnimationFrame(animate);
+        }
+
+        createStars();
+        animate();
+    </script>
+</body>
+</html>
