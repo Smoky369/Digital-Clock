@@ -10,7 +10,7 @@
             margin: 0;
             height: 100vh;
             display: flex;
-            flex-direction: column; /* Change to column layout */
+            flex-direction: column; 
             justify-content: center;
             align-items: center;
             overflow: hidden;
@@ -31,8 +31,8 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.1); /* Glass-like background */
-            backdrop-filter: blur(10px); /* Blurred effect */
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px); 
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 10px;
             text-align: center;
@@ -44,12 +44,12 @@
         .border {
             border-radius: 20px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.1); /* Glass-like background */
-            backdrop-filter: blur(10px); /* Blurred effect */
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px); 
             border: 1px solid rgba(255, 255, 255, 0.3);
             position: relative;
             z-index: 1;
-            width: 500px;  /* Increased width */
+            width: 500px;  
             height: 300px;
             display: flex;
             justify-content: center;
@@ -132,11 +132,11 @@
         .hand {
             width: 20px;
             height: 100px;
-            background: #ffcc00; /* Hand Color */
+            background: #ffcc00; 
             position: absolute;
-            bottom: 50%; /* Position higher */
+            bottom: 50%; 
             border-radius: 5px;
-            transform-origin: bottom; /* Set rotation pivot */
+            transform-origin: bottom; 
             animation: flap 2s infinite ease-in-out;
         }
 
@@ -155,7 +155,7 @@
                 transform: rotate(0deg);
             }
             50% {
-                transform: rotate(-130deg); /* Flap angle */
+                transform: rotate(-130deg); 
             }
         }
 
@@ -164,7 +164,7 @@
                 transform: rotate(0deg);
             }
             50% {
-                transform: rotate(130deg); /* Flap angle */
+                transform: rotate(130deg); 
             }
         }
 
@@ -188,7 +188,7 @@
         .shoe {
             width: 30px;
             height: 10px;
-            background: #ff5733; /* Shoe color */
+            background: #ff5733; 
             border-radius: 5px;
             position: absolute;
             bottom: -10px; 
@@ -231,16 +231,16 @@
 
         @keyframes fly {
             0% {
-                transform: translateY(100vh); /* Start from the bottom */
+                transform: translateY(100vh); 
             }
             100% {
-                transform: translateY(-100px); /* Fly up */
+                transform: translateY(-100px); 
             }
         }
 
         .developer {
             position: absolute;
-            bottom: 20px; /* Position at the bottom */
+            bottom: 20px; 
             text-align: center;
             color: #fff;
             font-size: 1em;
@@ -303,7 +303,7 @@
             const butterfly = document.createElement('img');
             butterfly.src = 'https://img.icons8.com/color/48/000000/butterfly.png';
             butterfly.className = 'butterfly';
-            const xPosition = Math.random() * (window.innerWidth - 50); // Avoid going off-screen
+            const xPosition = Math.random() * (window.innerWidth - 50);
             butterfly.style.left = xPosition + 'px';
             document.body.appendChild(butterfly);
             setTimeout(() => butterfly.remove(), 5000);
@@ -311,7 +311,7 @@
 
         function animate() {
             updateTime();
-            if (Math.random() < 0.02) createButterfly(); // Control butterfly frequency
+            if (Math.random() < 0.02) createButterfly();
             requestAnimationFrame(animate);
         }
 
@@ -319,4 +319,5 @@
         animate();
     </script>
 </body>
+
 </html>
